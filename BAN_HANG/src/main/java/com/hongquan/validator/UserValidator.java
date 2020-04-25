@@ -23,7 +23,7 @@ public class UserValidator implements Validator {
 		}
 		
 		if(user.getPhone().length()<6 || user.getPhone().length()>12) {
-			errors.rejectValue("password", "phone.valid");
+			errors.rejectValue("phone", "phone.valid");
 		}
 	}
 

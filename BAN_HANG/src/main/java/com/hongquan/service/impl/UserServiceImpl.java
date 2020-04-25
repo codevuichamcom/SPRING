@@ -4,11 +4,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.hongquan.Model.User;
 import com.hongquan.dao.UserDao;
 import com.hongquan.service.UserService;
 @Service
+@Transactional //sử dung Transaction cho toàn class(Nếu muốn cho 1 hàm thì đặt trên hàm đó)
 public class UserServiceImpl implements UserService {
 	
 	@Autowired
@@ -16,7 +18,7 @@ public class UserServiceImpl implements UserService {
 
 	public void addUser(User user) {
 		userDao.addUser(user);
-		
+//		throw new RuntimeException();   dòng này để test transaction
 	}
 
 	public void updateUser(User user) {

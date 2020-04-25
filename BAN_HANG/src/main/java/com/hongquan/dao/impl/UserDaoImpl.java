@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.hongquan.Model.User;
 import com.hongquan.dao.UserDao;
 
 @Repository
+@Transactional //sử dung Transaction cho toàn class(Nếu muốn cho 1 hàm thì đặt trên hàm đó)
 public class UserDaoImpl implements UserDao {
 
 	@Autowired

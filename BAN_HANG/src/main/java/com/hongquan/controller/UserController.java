@@ -52,7 +52,7 @@ public class UserController {
 	public String addUser(HttpServletRequest request, @ModelAttribute("user") User user, BindingResult bindingResult) {
 		userValidator.validate(user, bindingResult);
 		if (bindingResult.hasErrors()) {
-			return "view/addUser";
+			return "user/addUser";
 		}
 
 		userService.addUser(user); //luu cao csdl
@@ -81,7 +81,7 @@ public class UserController {
 	public String editUser(HttpServletRequest request, @ModelAttribute("user") User user, BindingResult bindingResult) {
 		userValidator.validate(user, bindingResult);
 		if (bindingResult.hasErrors()) {
-			return "view/editUser";
+			return "user/editUser";
 		}
 
 		userService.updateUser(user); //luu cao csdl
