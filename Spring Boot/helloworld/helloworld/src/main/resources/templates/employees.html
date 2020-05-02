@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1" />
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+<body>
+	<h1 th:text="#{employee.list}"></h1>
+	<p>------------------------------</p>
+	<table>
+		<tr>
+			<th>Id</th><th th:text="#{employee.name}"></th><th th:text="#{employee.age}"></th>
+		</tr>
+		<tr th:each="emp : ${employees}">
+			<td th:text="${emp.id}"></td>
+			<td th:text="${emp.name}"></td>
+			<td th:text="${emp.age}"></td>
+		</tr>
+	</table>
+</body>
+</html>
