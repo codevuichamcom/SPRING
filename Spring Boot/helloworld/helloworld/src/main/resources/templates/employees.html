@@ -6,6 +6,7 @@
 <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
 </head>
 <body>
+<div th:replace="common/header :: header"></div>
 	<h1 th:text="#{employee.list}"></h1>
 	<p>------------------------------</p>
 	<table>
@@ -16,7 +17,17 @@
 			<td th:text="${emp.id}"></td>
 			<td th:text="${emp.name}"></td>
 			<td th:text="${emp.age}"></td>
+			<td th:if="${emp.age &gt;= 45}" th:text="#{employee.old}"></td>
+			<td th:if="${emp.age &lt; 45 and emp.age &gt;= 25}" th:text="#{employee.medium}"></td>
+			<td th:if="${emp.age &lt; 25}" th:text="#{employee.young}"></td>
 		</tr>
 	</table>
+	<p>-------------------------------</p>
+	<form th:action="@{/employee}" th:object="${employee}" method="post">
+		<input th:field="*{name}" type="text"/>
+		<input th:field="*{age}" type="text"/>
+		<input type="submit" value="Tao moi"/>
+	</form>
+	<div th:replace="common/footer :: footer"></div>
 </body>
 </html>

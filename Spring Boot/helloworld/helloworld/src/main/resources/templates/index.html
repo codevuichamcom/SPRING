@@ -6,11 +6,13 @@
 <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
 </head>
 <body>
+<div th:replace="common/header :: header"></div>
 <h1 th:text="#{my.name}"></h1> <!-- co the doc truc tiep noi dung tu file message.properties -->
 
 <h2 th:text="${msg}"></h2>
 <!-- <img th:src="@{/images/cute.jpg}" /> -->
 
 <a th:href="@{/employees}" th:text="#{employee.list}"></a>
+<div th:replace="common/footer :: footer"></div>
 </body>
 </html>
