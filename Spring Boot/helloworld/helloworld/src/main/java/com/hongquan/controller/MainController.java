@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.hongquan.model.Employee;
+import com.hongquan.service.EmployeeService;
 
 @Controller
 public class MainController {
@@ -37,30 +38,31 @@ public class MainController {
 	Environment environment;
 	
 	
-	List<Employee> employees = new ArrayList<Employee>(); 
+//	List<Employee> employees = new ArrayList<Employee>(); 
+	
+	@Autowired
+	EmployeeService employeeService;
 	
 	@GetMapping(value = "/")
 	public String hello(HttpServletRequest request) {
-		employees.addAll(Arrays.asList(new Employee(1,"A",50),new Employee(2,"B",10),new Employee(3,"C",25)));
 		request.setAttribute("msg", environment.getProperty("message"));
 		return "index";
 	}
 	
 	@GetMapping(value = "/employees")
-	public String employees(HttpServletRequest request, Model model) {
+	public String employees(HttpServletRequest request,Model model) {
 		
-		
+		List<Employee> employees = employeeService.getAllEmployees();
 		request.setAttribute("employees", employees);
-		model.addAttribute("employee", new Employee(1,"demo",23));
+		model.addAttribute("employee", new Employee(1,"Demo",23));
 		return "employees";
 	}
 	
 	@PostMapping(value = "/employee")
 	public String addEmployee(HttpServletRequest request,
 			@ModelAttribute(name = "employee") Employee employee) {
-		employee.setId(employees.size()+1);
-		employees .add(employee);
-		request.setAttribute("employees", employees);
+		
+		employeeService.addEmployee(employee);
 		return "redirect:/employees";
 	}
 }
