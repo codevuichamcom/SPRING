@@ -1,9 +1,9 @@
-package com.hongquan.helloworld;
+package com.hongquan;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication(scanBasePackages = {"com.hongquan"})
+@SpringBootApplication
 public class HelloworldApplication {
 	
 	public static void main(String[] args) {

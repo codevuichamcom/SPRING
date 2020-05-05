@@ -1,25 +1,19 @@
 package com.hongquan.controller;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import com.hongquan.model.Employee;
+import com.hongquan.model.EmployeeDTO;
 import com.hongquan.service.EmployeeService;
 
 @Controller
@@ -52,17 +46,20 @@ public class MainController {
 	@GetMapping(value = "/employees")
 	public String employees(HttpServletRequest request,Model model) {
 		
-		List<Employee> employees = employeeService.getAllEmployees();
+		List<EmployeeDTO> employees = employeeService.getAllEmployees();
 		request.setAttribute("employees", employees);
-		model.addAttribute("employee", new Employee(1,"Demo",23));
+		model.addAttribute("employee", new EmployeeDTO(1,"Demo",23));
 		return "employees";
 	}
 	
 	@PostMapping(value = "/employee")
 	public String addEmployee(HttpServletRequest request,
-			@ModelAttribute(name = "employee") Employee employee) {
+			@ModelAttribute(name = "employee") EmployeeDTO employee) {
 		
+		employee.setPhones(Arrays.asList("0123456","789123"));
 		employeeService.addEmployee(employee);
 		return "redirect:/employees";
 	}
+	
+	//Với updatre thì xóa hết phone cũ đi và add phone mới vào
 }
