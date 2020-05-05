@@ -7,6 +7,12 @@
 </head>
 <body>
 	<div th:replace="common/header :: header"></div>
+	
+	<form method="post" th:action="@{/logout}">
+		<input type="submit" value="Dang Xuat"/>
+	</form>
+	
+	
 	<h1 th:text="#{employee.list}"></h1>
 	<p>------------------------------</p>
 	<table>

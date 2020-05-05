@@ -48,4 +48,10 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		return entityManager.find(Employee.class, id);
 	}
 
+	@Override
+	public Employee getEmployeeByUsename(String username) {
+		String jql ="SELECT e from Employee e where e.username = ?1";
+		return entityManager.createQuery(jql,Employee.class).setParameter(1, username).getSingleResult();
+	}
+
 }
