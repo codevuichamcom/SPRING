@@ -1,0 +1,14 @@
+.page {
+	margin-top: 1.5rem;
+}
+
+.page span .active{
+    background: red;
+    color: white;
+}
+.page span a {
+	border-radius: 10px;
+	margin-right: 0.25rem;
+	padding: 5px;
+	border: 1px solid #000;
+}

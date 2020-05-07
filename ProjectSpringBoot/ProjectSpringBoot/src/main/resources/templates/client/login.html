@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1" />
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+<body>
+<!-- <div th:replace="common/header :: header"></div> -->
+	<p th:if="${e == 'deny'}">Tai khoan khong co quyen truy cap</p>
+	<p th:if="${e == 'error'}">Tai khoan hoac mat khau khong dung</p>
+	<form method="post" th:action="@{/login}">
+		<input name="username" type="text"/>
+		<input name="password" type="password"/>
+		<input type="submit" value="Dang nhap"/>
+	</form>
+<!-- <div th:replace="common/footer :: footer"></div> -->
+</body>
+</html>

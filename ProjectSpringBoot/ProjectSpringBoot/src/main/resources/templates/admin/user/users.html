@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1" />
+<title>Insert title here</title>
+
+<script type="text/javascript">
+	function submitForm(page) {
+		document.getElementById('page').value = page;
+		document.getElementById('frmSearch').submit();
+	}
+</script>
+<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+	<div th:replace="admin/common/header :: header"></div>
+	
+	<a th:href="@{/admin/user/addUser}">Add user</a>
+	<hr/>
+	<form id='frmSearch' th:action="@{/admin/user/search}" method="get">
+		<input type="hidden" name="page" id="page" /> Name: <input
+			type="text" name="keyword" th:value="${keyword}" /> <input type="submit" value="Search" />
+	</form>
+	
+	<h1>Form add user </h1>
+	<hr/>
+	<table border="1">
+		<tr>
+			<th th:text="#{user.username}"></th>
+			<th th:text="#{user.name}"></th>
+			<th th:text="#{user.age}"></th>
+			<th th:text="#{user.gender}"></th>
+			<th th:text="#{user.email}"></th>
+			<th th:text="#{user.address}"></th>
+			<th th:text="#{user.phone}"></th>
+			<th th:text="#{user.role}"></th>
+			<th th:text="#{user.enable}"></th>
+			<th>Option</th>
+		</tr>
+		<tr th:each="user: ${listUsers}">
+			<td th:text="${user.username}"></td>
+			<td th:text="${user.name}"></td>
+			<td th:text="${user.age}"></td>
+			<td th:text="${user.gender}"></td>
+			<td th:text="${user.email}"></td>
+			<td th:text="${user.address}"></td>
+			<td th:text="${user.phone}"></td>
+			<td th:text="${user.role}"></td>
+			<td th:text="${user.enable}"></td>
+			<td><a
+				th:href="@{'/admin/user/editUser?username='+${user.username}}">Edit</a>
+				| <a
+				th:href="@{'/admin/user/deleteUser?username='+${user.username}}">Delete</a></td>
+		</tr>
+	</table>
+	<div class="page">
+		<span th:each="pageIndex : ${listCount}">
+			<a th:if="${page == pageIndex}" class="active" th:onclick="'submitForm('+${pageIndex}+')'" th:text="${pageIndex} "></a>
+			<a th:if="${page != pageIndex}" th:onclick="'submitForm('+${pageIndex}+')'" th:text="${pageIndex} "></a>
+		</span>
+	</div>
+
+
+</body>
+</html>
