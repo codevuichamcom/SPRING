@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1" />
+<title>Insert title here</title>
+
+<script type="text/javascript">
+	function submitForm(page) {
+		document.getElementById('page').value = page;
+		document.getElementById('frmSearch').submit();
+	}
+</script>
+<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+	<div th:replace="admin/common/header :: header"></div>
+	<a th:href="@{/admin/product/addProduct}">Add Product</a>
+	<hr />
+	<form id='frmSearch' th:action="@{/admin/product/search}" method="get">
+		<input type="hidden" name="page" id="page" /> Name: <input
+			type="text" name="keyword" th:value="${keyword}" /> <input
+			type="submit" value="Search" />
+	</form>
+
+	<h1>Form list product</h1>
+	<hr />
+	<table border="1">
+		<tr>
+			<th th:text="#{product.id}"></th>
+			<th th:text="#{product.name}"></th>
+			<th th:text="#{product.price}"></th>
+			<th th:text="#{product.quantity}"></th>
+			<th th:text="#{product.description}"></th>
+			<th th:text="#{product.image}"></th>
+			<th th:text="#{product.category}"></th>
+			<th>Option</th>
+		</tr>
+		<tr th:each="product: ${listProducts}">
+			<td th:text="${product.id}"></td>
+			<td th:text="${product.name}"></td>
+			<td th:text="${product.price}"></td>
+			<td th:text="${product.quantity}"></td>
+			<td th:text="${product.description}"></td>
+			<td><img style="width: 50px;height: 50px" th:src="@{'/images/'+${product.image}}"/></td>
+			<td th:text="${product.category.name}"></td>
+			<td><a
+				th:href="@{'/admin/product/editProduct?id='+${product.id}}">Edit</a>
+				| <a
+				th:href="@{'/admin/product/deleteProduct?id='+${product.id}}">Delete</a></td>
+		</tr>
+	</table>
+	<div class="page">
+		<span th:each="pageIndex : ${listCount}"> <a
+			th:if="${page == pageIndex}" class="active"
+			th:onclick="'submitForm('+${pageIndex}+')'" th:text="${pageIndex} "></a>
+			<a th:if="${page != pageIndex}"
+			th:onclick="'submitForm('+${pageIndex}+')'" th:text="${pageIndex} "></a>
+		</span>
+	</div>
+
+
+</body>
+</html>

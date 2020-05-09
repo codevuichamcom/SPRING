@@ -15,16 +15,16 @@
 
 <body>
 	<div th:replace="admin/common/header :: header"></div>
-	
 	<a th:href="@{/admin/user/addUser}">Add user</a>
-	<hr/>
+	<hr />
 	<form id='frmSearch' th:action="@{/admin/user/search}" method="get">
 		<input type="hidden" name="page" id="page" /> Name: <input
-			type="text" name="keyword" th:value="${keyword}" /> <input type="submit" value="Search" />
+			type="text" name="keyword" th:value="${keyword}" /> <input
+			type="submit" value="Search" />
 	</form>
-	
-	<h1>Form add user </h1>
-	<hr/>
+
+	<h1>Form list user</h1>
+	<hr />
 	<table border="1">
 		<tr>
 			<th th:text="#{user.username}"></th>
@@ -55,9 +55,11 @@
 		</tr>
 	</table>
 	<div class="page">
-		<span th:each="pageIndex : ${listCount}">
-			<a th:if="${page == pageIndex}" class="active" th:onclick="'submitForm('+${pageIndex}+')'" th:text="${pageIndex} "></a>
-			<a th:if="${page != pageIndex}" th:onclick="'submitForm('+${pageIndex}+')'" th:text="${pageIndex} "></a>
+		<span th:each="pageIndex : ${listCount}"> <a
+			th:if="${page == pageIndex}" class="active"
+			th:onclick="'submitForm('+${pageIndex}+')'" th:text="${pageIndex} "></a>
+			<a th:if="${page != pageIndex}"
+			th:onclick="'submitForm('+${pageIndex}+')'" th:text="${pageIndex} "></a>
 		</span>
 	</div>
 

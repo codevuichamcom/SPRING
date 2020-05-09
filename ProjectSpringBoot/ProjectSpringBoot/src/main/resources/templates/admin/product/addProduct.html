@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1"/>
+<title>Insert title here</title>
+</head>
+<body>
+	<div th:replace="admin/common/header :: header"></div>
+	<h1>Form add product </h1>
+	<form th:action="@{/admin/product/addProduct}" th:object="${product}"  method="post" enctype="multipart/form-data" >
+		<div>
+			<label>Name</label><input type="text" th:field="*{name}" placeholder="Name" required="required" />
+		</div>
+		<div>
+			<label>Price</label><input type="number" min="0" step="0.01" th:field="*{price}" placeholder="Price" required="required" />
+		</div>
+		<div>
+			<label>Quantity</label> <input th:field="*{quantity}" type="number" min="0" placeholder="Quantity" required="required" />
+		</div>
+		<div>
+			<label>Description</label><textarea rows="3" th:field="*{description}"></textarea>
+		</div>
+		<div>
+			<label>Image</label> <input th:field="*{file}" type="file" accept="images/*"/>
+		</div>
+		
+		<div>
+			<label>Category</label> <select th:field="*{category.id}">
+				<option th:each="category : ${listCategories}" th:value="${category.id}" th:text="${category.name}">Tools</option>
+			</select>
+		</div>
+		<div>
+			<button type="submit">ADD</button>
+		</div>
+	</form>
+</body>
+</html>
