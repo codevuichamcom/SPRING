@@ -23,6 +23,7 @@ public class ProjectSpringBootApplication extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		
 		http.csrf().disable().authorizeRequests().antMatchers("/admin/**").hasRole("ADMIN").antMatchers("/member/**").hasRole("MEMBER").anyRequest().permitAll().and().
 		formLogin().loginPage("/login").defaultSuccessUrl("/").failureUrl("/login?e=error").
 		and().exceptionHandling().accessDeniedPage("/login?e=deny");

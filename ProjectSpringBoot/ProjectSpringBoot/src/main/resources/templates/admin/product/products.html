@@ -15,17 +15,28 @@
 
 <body>
 	<div th:replace="admin/common/header :: header"></div>
-	<a th:href="@{/admin/product/addProduct}">Add Product</a>
+	<a th:href="@{/admin/product/add-product}">Add Product</a>
 	<hr />
-	<form id='frmSearch' th:action="@{/admin/product/search}" method="get">
+	<form id='frmSearch' th:action="@{/admin/product/search}" method="post">
 		<input type="hidden" name="page" id="page" /> Name: <input
-			type="text" name="keyword" th:value="${keyword}" /> <input
-			type="submit" value="Search" />
+			type="text" name="keyword" th:value="${keyword}" /> 
+			
+		<label>Category</label>
+		<select name="category">
+		<option th:value="-1" th:text="ALL"></option>
+			<option th:each="category : ${listCategories}"
+				th:value="${category.id}" th:text="${category.name}" th:selected="${category.id == categoryId}" ></option>
+		</select> 
+		
+		<input type="submit" value="Search" />
 	</form>
 
 	<h1>Form list product</h1>
 	<hr />
-	<table border="1">
+
+	<h2 th:if="${listProducts.size() == 0}">Not Found</h2>
+
+	<table th:if="${listProducts.size() != 0}" border="1">
 		<tr>
 			<th th:text="#{product.id}"></th>
 			<th th:text="#{product.name}"></th>
@@ -42,12 +53,12 @@
 			<td th:text="${product.price}"></td>
 			<td th:text="${product.quantity}"></td>
 			<td th:text="${product.description}"></td>
-			<td><img style="width: 50px;height: 50px" th:src="@{'/images/'+${product.image}}"/></td>
+			<td><img style="width: 50px; height: 50px"
+				th:src="@{'/images/'+${product.image}}" /></td>
 			<td th:text="${product.category.name}"></td>
 			<td><a
-				th:href="@{'/admin/product/editProduct?id='+${product.id}}">Edit</a>
-				| <a
-				th:href="@{'/admin/product/deleteProduct?id='+${product.id}}">Delete</a></td>
+				th:href="@{'/admin/product/edit-product?id='+${product.id}}">Edit</a>
+				| <a th:href="@{'/admin/product/delete-product?id='+${product.id}}">Delete</a></td>
 		</tr>
 	</table>
 	<div class="page">

@@ -7,7 +7,7 @@
 <body>
 	<div th:replace="admin/common/header :: header"></div>
 	<h1>Form edit product </h1>
-	<form th:action="@{/admin/product/editProduct}" th:object="${product}"  method="post" enctype="multipart/form-data" >
+	<form th:action="@{/admin/product/edit-product}" th:object="${product}"  method="post" enctype="multipart/form-data" >
 		<input th:field="*{id}" type="hidden"/>
 		<div>
 			<label>Name</label><input type="text" th:field="*{name}" placeholder="Name" required="required" />

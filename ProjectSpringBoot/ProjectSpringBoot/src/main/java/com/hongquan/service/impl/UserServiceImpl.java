@@ -20,20 +20,6 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	UserDao userDao;
 
-	@Override
-	public List<UserDTO> getAllUserDTOs() {
-		List<User> listUsers = userDao.getAllUsers();
-		List<UserDTO> listUserDTOs = new ArrayList<UserDTO>();
-		for (User user : listUsers) {
-			UserDTO userDTO = new UserDTO(user.getUsername(), user.getPassword(), user.getName(), user.getAge(),
-					user.getGender(), user.getEmail(), user.getAddress(), user.getPhone(), user.getRole(),
-					user.getEnable());
-
-			listUserDTOs.add(userDTO);
-		}
-
-		return listUserDTOs;
-	}
 
 	@Override
 	public void addUserDTO(UserDTO userDTO) {
@@ -90,8 +76,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public int countPageWhenSearch(String name) {
-		return userDao.countPageWhenSearch(name);
+	public int countUserWhenSearch(String name) {
+		return userDao.countUserWhenSearch(name);
 	}
 
 }

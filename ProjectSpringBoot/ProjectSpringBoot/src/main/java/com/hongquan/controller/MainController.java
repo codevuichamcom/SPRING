@@ -33,7 +33,7 @@ public class MainController {
 
 	@GetMapping(value = "/")
 	public String home(HttpServletRequest request) {
-		List<ProductDTO> listProducts = productService.getAllProductDTOs(0, 100);
+		List<ProductDTO> listProducts = productService.search("",-1, 0, 100);
 
 		List<CategoryDTO> listCategories = categoryService.getAllCategorys(0, 100);
 		request.setAttribute("listProducts", listProducts);

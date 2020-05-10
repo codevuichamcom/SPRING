@@ -40,47 +40,55 @@ public class AdminProductController {
 		final int PAGE_SIZE = 2;
 		page = page == null ? 1 : page;
 
-		int totalProduct = productService.countAllProduct();
+		int totalProduct = productService.countProductWhenSearch("",-1);
 		int pageCount = (totalProduct % PAGE_SIZE == 0) ? totalProduct / PAGE_SIZE : totalProduct / PAGE_SIZE + 1;
 
-		int totalPage = 0;
-		List<ProductDTO> listProducts = productService.getAllProductDTOs(0, 2);
+		List<ProductDTO> listProducts = productService.search("",-1, 0, PAGE_SIZE);
 
 		List<Integer> listCount = new ArrayList<Integer>();
 		for (int i = 1; i <= pageCount; i++) {
 			listCount.add(i);
 		}
+		List<CategoryDTO> listCategories = categoryService.getAllCategorys(0, 100);
+		
 		request.setAttribute("listProducts", listProducts);
+		request.setAttribute("listCategories", listCategories);
 		request.setAttribute("page", page);
 		request.setAttribute("listCount", listCount);
 
 		return "admin/product/products";
 	}
 
-	@GetMapping(value = "/product/search")
+	@PostMapping(value = "/product/search")
 	public String search(HttpServletRequest request, @RequestParam(name = "keyword", required = false) String keyword,
-			@RequestParam(value = "page", required = false) Integer page) {
+			@RequestParam(name = "page", required = false) Integer page,
+			@RequestParam(name = "category") int categoryId) {
 		final int PAGE_SIZE = 2;
 		page = page == null ? 1 : page;
 		keyword = keyword == null ? "" : keyword;
-		int totalProduct = productService.countProductWhenSearch(keyword);
+		int totalProduct = productService.countProductWhenSearch(keyword,categoryId);
 
 		int pageCount = (totalProduct % PAGE_SIZE == 0) ? totalProduct / PAGE_SIZE : totalProduct / PAGE_SIZE + 1;
 
-		List<ProductDTO> listProducts = productService.search(keyword, (page - 1) * PAGE_SIZE, PAGE_SIZE);
+		List<ProductDTO> listProducts = productService.search(keyword,categoryId, (page - 1) * PAGE_SIZE, PAGE_SIZE);
 		List<Integer> listCount = new ArrayList<Integer>();
 		for (int i = 1; i <= pageCount; i++) {
 			listCount.add(i);
 		}
+		
+		List<CategoryDTO> listCategories = categoryService.getAllCategorys(0, 100);
+		
 		request.setAttribute("listProducts", listProducts);
+		request.setAttribute("listCategories", listCategories);
 		request.setAttribute("page", page);
 		request.setAttribute("listCount", listCount);
 		request.setAttribute("keyword", keyword);
+		request.setAttribute("categoryId", categoryId);
 
 		return "admin/product/products";
 	}
 
-	@GetMapping(value = "/product/addProduct")
+	@GetMapping(value = "/product/add-product")
 	public String addProduct(HttpServletRequest request, Model model) {
 		model.addAttribute("product", new ProductDTO());
 		List<CategoryDTO> listCategories = categoryService.getAllCategorys(0, 100);
@@ -88,7 +96,7 @@ public class AdminProductController {
 		return "admin/product/addProduct";
 	}
 
-	@PostMapping(value = "/product/addProduct")
+	@PostMapping(value = "/product/add-product")
 	public String addProduct(HttpServletRequest request, @ModelAttribute("product") ProductDTO productDTO) {
 
 		MultipartFile file = productDTO.getFile();
@@ -125,7 +133,7 @@ public class AdminProductController {
 		return "redirect:/admin/product/products";
 	}
 
-	@GetMapping(value = "/product/editProduct")
+	@GetMapping(value = "/product/edit-product")
 	public String editUser(HttpServletRequest request, @RequestParam(value = "id") int id, Model model) {
 		ProductDTO productDTO = productService.getProductDTOById(id);
 		model.addAttribute("product", productDTO);
@@ -134,7 +142,7 @@ public class AdminProductController {
 		return "admin/product/editProduct";
 	}
 
-	@PostMapping(value = "/product/editProduct")
+	@PostMapping(value = "/product/edit-product")
 	public String editUser(HttpServletRequest request, @ModelAttribute("product") ProductDTO productDTO) {
 
 		MultipartFile file = productDTO.getFile();
@@ -174,7 +182,7 @@ public class AdminProductController {
 		return "redirect:/admin/product/products";
 	}
 
-	@GetMapping(value = "/product/deleteProduct")
+	@GetMapping(value = "/product/delete-product")
 	public String deleteUser(HttpServletRequest request, @RequestParam(value = "id") int id) {
 
 		productService.deleteProductDTO(id);

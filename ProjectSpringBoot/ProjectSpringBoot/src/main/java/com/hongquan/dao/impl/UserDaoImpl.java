@@ -19,11 +19,6 @@ public class UserDaoImpl implements UserDao {
 	@PersistenceContext
 	EntityManager entityManager;
 	
-	@Override
-	public List<User> getAllUsers() {
-		String jql ="SELECT u from User u";
-		return entityManager.createQuery(jql, User.class).getResultList();
-	}
 
 	@Override
 	public void addUser(User user) {
@@ -56,7 +51,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public int countPageWhenSearch(String name) {
+	public int countUserWhenSearch(String name) {
 		String jql ="SELECT u from User u where name like :name";
 		Query query = entityManager.createQuery(jql,User.class);
 		query.setParameter("name","%"+ name+"%");

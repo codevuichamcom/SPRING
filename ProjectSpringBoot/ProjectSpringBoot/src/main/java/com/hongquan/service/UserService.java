@@ -5,7 +5,6 @@ import java.util.List;
 import com.hongquan.model.UserDTO;
 
 public interface UserService {
-	public List<UserDTO> getAllUserDTOs();
 
 	public void addUserDTO(UserDTO userDTO);
 
@@ -17,5 +16,5 @@ public interface UserService {
 	
 	public List<UserDTO> search(String name, int start, int length);
 	
-	public int countPageWhenSearch(String name);
+	public int countUserWhenSearch(String name);
 }

@@ -15,9 +15,9 @@
 
 <body>
 	<div th:replace="admin/common/header :: header"></div>
-	<a th:href="@{/admin/user/addUser}">Add user</a>
+	<a th:href="@{/admin/user/add-user}">Add user</a>
 	<hr />
-	<form id='frmSearch' th:action="@{/admin/user/search}" method="get">
+	<form id='frmSearch' th:action="@{/admin/user/search}" method="post">
 		<input type="hidden" name="page" id="page" /> Name: <input
 			type="text" name="keyword" th:value="${keyword}" /> <input
 			type="submit" value="Search" />
@@ -25,7 +25,10 @@
 
 	<h1>Form list user</h1>
 	<hr />
-	<table border="1">
+	
+	<h2 th:if="${listUsers.size() == 0}" >Not Found</h2>
+	
+	<table th:if="${listUsers.size() != 0}" border="1">
 		<tr>
 			<th th:text="#{user.username}"></th>
 			<th th:text="#{user.name}"></th>
@@ -49,9 +52,9 @@
 			<td th:text="${user.role}"></td>
 			<td th:text="${user.enable}"></td>
 			<td><a
-				th:href="@{'/admin/user/editUser?username='+${user.username}}">Edit</a>
+				th:href="@{'/admin/user/edit-user?username='+${user.username}}">Edit</a>
 				| <a
-				th:href="@{'/admin/user/deleteUser?username='+${user.username}}">Delete</a></td>
+				th:href="@{'/admin/user/delete-user?username='+${user.username}}">Delete</a></td>
 		</tr>
 	</table>
 	<div class="page">

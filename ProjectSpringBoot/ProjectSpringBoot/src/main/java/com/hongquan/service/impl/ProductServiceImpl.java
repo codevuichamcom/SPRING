@@ -11,10 +11,8 @@ import org.springframework.stereotype.Service;
 import com.hongquan.dao.ProductDao;
 import com.hongquan.entity.Category;
 import com.hongquan.entity.Product;
-import com.hongquan.entity.User;
 import com.hongquan.model.CategoryDTO;
 import com.hongquan.model.ProductDTO;
-import com.hongquan.model.UserDTO;
 import com.hongquan.service.ProductService;
 
 @Transactional
@@ -24,32 +22,6 @@ public class ProductServiceImpl implements ProductService {
 	@Autowired
 	ProductDao productDao;
 
-	@Override
-	public List<ProductDTO> getAllProductDTOs(int start, int length) {
-		List<Product> listProducts = productDao.getAllProducts(start, length);
-		List<ProductDTO> listProductDTOs = new ArrayList<ProductDTO>();
-		for (Product product : listProducts) {
-			ProductDTO productDTO = new ProductDTO();
-			productDTO.setId(product.getId());
-			productDTO.setName(product.getName());
-			productDTO.setPrice(product.getPrice());
-			productDTO.setQuantity(product.getQuantity());
-			productDTO.setDescription(product.getDescription());
-			productDTO.setImage(product.getImage());
-
-			CategoryDTO categoryDTO = new CategoryDTO(product.getCategory().getId(), product.getCategory().getName());
-			productDTO.setCategory(categoryDTO);
-
-			listProductDTOs.add(productDTO);
-		}
-
-		return listProductDTOs;
-	}
-
-	@Override
-	public int countAllProduct() {
-		return productDao.countAllProduct();
-	}
 
 	@Override
 	public void addProductDTO(ProductDTO productDTO) {
@@ -95,8 +67,8 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<ProductDTO> search(String keyword, int start, int length) {
-		List<Product> listProducts = productDao.search(keyword, start, length);
+	public List<ProductDTO> search(String keyword,int categoryId, int start, int length) {
+		List<Product> listProducts = productDao.search(keyword,categoryId, start, length);
 		List<ProductDTO> listProductDTOs = new ArrayList<ProductDTO>();
 		for (Product product : listProducts) {
 			ProductDTO productDTO = new ProductDTO(product.getId(), product.getName(), product.getPrice(),
@@ -110,8 +82,8 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public int countProductWhenSearch(String keyword) {
-		return productDao.countProductWhenSearch(keyword);
+	public int countProductWhenSearch(String keyword,int categoryId) {
+		return productDao.countProductWhenSearch(keyword,categoryId);
 	}
 
 }

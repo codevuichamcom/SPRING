@@ -19,22 +19,6 @@ public class ProductDaoImpl implements ProductDao {
 	@PersistenceContext
 	EntityManager entityManager;
 
-	@Override
-	public List<Product> getAllProducts(int start, int length) {
-		String jql = "SELECT p from Product p";
-
-		Query query = entityManager.createQuery(jql, Product.class);
-		query.setFirstResult(start);
-		query.setMaxResults(length);
-		return query.getResultList();
-	}
-
-	@Override
-	public int countAllProduct() {
-		String jql = "SELECT p from Product p";
-		Query query = entityManager.createQuery(jql, Product.class);
-		return query.getResultList().size();
-	}
 
 	@Override
 	public void addProduct(Product product) {
@@ -59,20 +43,32 @@ public class ProductDaoImpl implements ProductDao {
 	}
 
 	@Override
-	public List<Product> search(String keyword, int start, int length) {
-		String jql ="SELECT p from Product p where name like :keyword or description like :keyword";
+	public List<Product> search(String keyword,int categoryId, int start, int length) {
+		String jql ="SELECT p from Product p where (name like :keyword or description like :keyword)";
+		if(categoryId!=-1) {
+			jql+=" and category.id = :categoryId";
+		}
 		Query query = entityManager.createQuery(jql,Product.class);
 		query.setParameter("keyword","%"+ keyword+"%");
+		if(categoryId!=-1) {
+			query.setParameter("categoryId",categoryId);
+		}
 		query.setFirstResult(start);
 		query.setMaxResults(length);
 		return query.getResultList();
 	}
 	
 	@Override
-	public int countProductWhenSearch(String keyword) {
-		String jql ="SELECT p from Product p where name like :keyword or description like :keyword";
+	public int countProductWhenSearch(String keyword, int categoryId) {
+		String jql ="SELECT p from Product p where (name like :keyword or description like :keyword)";
+		if(categoryId!=-1) {
+			jql+=" and category.id = :categoryId";
+		}
 		Query query = entityManager.createQuery(jql,Product.class);
 		query.setParameter("keyword","%"+ keyword+"%");
+		if(categoryId!=-1) {
+			query.setParameter("categoryId",categoryId);
+		}
 		return query.getResultList().size();
 	}
 
