@@ -16,4 +16,8 @@ public interface BillService {
 	public List<BillDTO> search(String keyword, int start, int length);
 	
 	public int countBillDTOWhenSearch(String keyword);
+	
+	public List<BillDTO> searchByUsername(String username, int start, int length);
+		
+	public int countBillWhenSearchByUsername(String username);
 }

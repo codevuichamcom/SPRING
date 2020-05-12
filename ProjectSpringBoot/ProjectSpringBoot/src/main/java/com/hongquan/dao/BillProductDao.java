@@ -16,4 +16,8 @@ public interface BillProductDao {
 	public List<BillProduct> search(String keyword, int start, int length);
 	
 	public int countBillProductWhenSearch(String keyword);
+	
+	public List<BillProduct> searchByBillId(int billId, int start, int length);
+	
+	public int countBillProductWhenSearchByBillId(int billId);
 }

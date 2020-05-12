@@ -56,5 +56,23 @@ public class BillProductDaoImpl implements BillProductDao {
 		return query.getResultList().size();
 	}
 
+	@Override
+	public List<BillProduct> searchByBillId(int billId, int start, int length) {
+		String jql ="SELECT bp from BillProduct bp where bp.bill.id = :billId";
+		Query query = entityManager.createQuery(jql,BillProduct.class);
+		query.setParameter("billId", billId);
+		query.setFirstResult(start);
+		query.setMaxResults(length);
+		return query.getResultList();
+	}
+
+	@Override
+	public int countBillProductWhenSearchByBillId(int billId) {
+		String jql ="SELECT bp from BillProduct bp where bp.bill.id = :billId";
+		Query query = entityManager.createQuery(jql,BillProduct.class);
+		query.setParameter("billId", billId);
+		return query.getResultList().size();
+	}
+
 	
 }

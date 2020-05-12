@@ -42,7 +42,7 @@ public class BillDaoImpl implements BillDao {
 
 	@Override
 	public List<Bill> search(String keyword, int start, int length) {
-		String jql ="SELECT b from Bill b where b.username like :keyword";
+		String jql ="SELECT b from Bill b where b.user.name like :keyword";
 		Query query = entityManager.createQuery(jql,Bill.class);
 		query.setParameter("keyword","%"+ keyword+"%");
 		query.setFirstResult(start);
@@ -52,10 +52,30 @@ public class BillDaoImpl implements BillDao {
 
 	@Override
 	public int countBillWhenSearch(String keyword) {
-			String jql ="SELECT b from Bill b where b.username like :keyword";
+			String jql ="SELECT b from Bill b where b.user.name like :keyword";
 			Query query = entityManager.createQuery(jql,Bill.class);
 			query.setParameter("keyword","%"+ keyword+"%");
 			return query.getResultList().size();
 	}
+
+	@Override
+	public List<Bill> searchByUsername(String username, int start, int length) {
+		String jql ="SELECT b from Bill b where b.user.username = :username";
+		Query query = entityManager.createQuery(jql,Bill.class);
+		query.setParameter("username",username);
+		query.setFirstResult(start);
+		query.setMaxResults(length);
+		return query.getResultList();
+	}
+
+	@Override
+	public int countBillWhenSearchByUsername(String username) {
+		String jql ="SELECT b from Bill b where b.user.username = :username";
+		Query query = entityManager.createQuery(jql,Bill.class);
+		query.setParameter("username",username);
+		return query.getResultList().size();
+	}
+	
+	
 
 }

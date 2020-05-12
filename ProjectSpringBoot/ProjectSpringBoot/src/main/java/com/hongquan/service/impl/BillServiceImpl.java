@@ -11,8 +11,10 @@ import org.springframework.stereotype.Service;
 
 import com.hongquan.dao.BillDao;
 import com.hongquan.entity.Bill;
+import com.hongquan.entity.BillProduct;
 import com.hongquan.entity.User;
 import com.hongquan.model.BillDTO;
+import com.hongquan.model.BillProductDTO;
 import com.hongquan.model.UserDTO;
 import com.hongquan.service.BillService;
 
@@ -36,6 +38,7 @@ public class BillServiceImpl implements BillService {
 		bill.setUser(user);
 
 		billDao.addBill(bill);
+		billDTO.setId(bill.getId());
 
 	}
 
@@ -77,6 +80,16 @@ public class BillServiceImpl implements BillService {
 			UserDTO userDTO = new UserDTO();
 			userDTO.setUsername(bill.getUser().getUsername());
 			billDTO.setUser(userDTO);
+			
+			List<BillProduct> billProducts = bill.getBillProducts();
+			List<BillProductDTO>billProductDTOs = new ArrayList<BillProductDTO>();
+			for (BillProduct billProduct : billProducts) {
+						BillProductDTO billProductDTO = new BillProductDTO();
+						billProductDTO.setId(billProduct.getId());
+						//còn nữa
+						
+						billProductDTOs.add(billProductDTO);				
+			}
 
 			return billDTO;
 		}
@@ -90,12 +103,16 @@ public class BillServiceImpl implements BillService {
 		List<BillDTO> listBillDTOs = new ArrayList<BillDTO>();
 		for (Bill bill : listBills) {
 			BillDTO billDTO = new BillDTO();
+			billDTO.setId(bill.getId());
 			billDTO.setBuyDate(bill.getBuyDate());
 
 			billDTO.setPriceTotal(bill.getPriceTotal());
 			billDTO.setDiscountPercent(bill.getDiscountPercent());
 			UserDTO userDTO = new UserDTO();
 			userDTO.setUsername(bill.getUser().getUsername());
+			userDTO.setName(bill.getUser().getName());
+			userDTO.setAddress(bill.getUser().getAddress());
+			userDTO.setPhone(bill.getUser().getPhone());
 			billDTO.setUser(userDTO);
 			listBillDTOs.add(billDTO);
 
@@ -107,6 +124,35 @@ public class BillServiceImpl implements BillService {
 	@Override
 	public int countBillDTOWhenSearch(String keyword) {
 		return billDao.countBillWhenSearch(keyword);
+	}
+
+	@Override
+	public List<BillDTO> searchByUsername(String username, int start, int length) {
+		List<Bill> listBills = billDao.searchByUsername(username, start, length);
+		List<BillDTO> listBillDTOs = new ArrayList<BillDTO>();
+		for (Bill bill : listBills) {
+			BillDTO billDTO = new BillDTO();
+			billDTO.setId(bill.getId());
+			billDTO.setBuyDate(bill.getBuyDate());
+
+			billDTO.setPriceTotal(bill.getPriceTotal());
+			billDTO.setDiscountPercent(bill.getDiscountPercent());
+			UserDTO userDTO = new UserDTO();
+			userDTO.setUsername(bill.getUser().getUsername());
+			userDTO.setName(bill.getUser().getName());
+			userDTO.setAddress(bill.getUser().getAddress());
+			userDTO.setPhone(bill.getUser().getPhone());
+			billDTO.setUser(userDTO);
+			listBillDTOs.add(billDTO);
+
+		}
+
+		return listBillDTOs;
+	}
+
+	@Override
+	public int countBillWhenSearchByUsername(String username) {
+		return billDao.countBillWhenSearchByUsername(username);
 	}
 
 }

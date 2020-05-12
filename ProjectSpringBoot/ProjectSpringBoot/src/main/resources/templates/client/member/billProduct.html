@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+
+<!-- Bootstrap core CSS -->
+<link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}"
+	rel="stylesheet" />
+
+<!-- Custom styles for this template -->
+<link th:href="@{/css/shop-homepage.css}" rel="stylesheet" />
+
+<!-- <script type="text/javascript">
+	function submitForm(page) {
+		document.getElementById('page').value = page;
+		document.getElementById('frmSearch').submit();
+	}
+</script> -->
+<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+	<!-- Navigation -->
+	<div th:replace="client/common/navComponent :: nav"></div>
+	
+	<hr />
+<!-- 	<form id='frmSearch' th:action="@{/admin/bill/search}" method="get">
+		<input type="hidden" name="page" id="page" /> Name: <input
+			type="text" name="keyword" th:value="${keyword}" /> <input
+			type="submit" value="Search" />
+	</form> -->
+	<h1>Danh Sach Bill Detail</h1>
+	<hr/>
+	<table border="1px solid black">
+		<tr>
+			<th>ID</th>
+			<th>TEN_SP</th>
+			<th>GIA_SP</th>
+			<th>SOLUONG</th>
+			<th>THANH TIEN</th>
+			<th>OPTION</th>
+		</tr>
+
+		<tr th:each="bp:${billProducts}">
+			<td th:text="${bp.id }"></td>
+			<td th:text="${bp.product.name }"></td>
+			<td th:text="${bp.product.price }"></td>
+			<td th:text="${bp.quantity }"></td>
+			<td th:text="${bp.product.price*bp.quantity }"></td>
+			<td><a th:href="@{'/member/bill/delete-bill-product?billProductId='+${bp.id }}">DELETE</a></td>			
+		</tr>
+
+	</table>
+	<div class="page" style="margin-bottom: 50rem">
+		<span th:each="pageIndex : ${listCount}"> <a
+			th:if="${page == pageIndex}" class="active"
+			th:href="@{'/member/bill/detail?page='+${pageIndex}+'&billId='+${billId}}" th:text="${pageIndex} "></a>
+			<a th:if="${page != pageIndex}"
+			th:href="@{'/member/bill/detail?page='+${pageIndex}+'&billId='+${billId}}" th:text="${pageIndex} "></a>
+		</span>
+	</div>
+	
+	<!-- Footer -->
+	<div th:replace="client/common/footer :: footer"></div>
+
+</body>
+</html>

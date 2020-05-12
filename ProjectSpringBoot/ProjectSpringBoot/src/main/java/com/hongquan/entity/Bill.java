@@ -1,9 +1,19 @@
 package com.hongquan.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 
 /**
@@ -19,7 +29,6 @@ public class Bill implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="buy_date")
 	private Date buyDate;
 
@@ -35,7 +44,8 @@ public class Bill implements Serializable {
 	private User user;
 
 	//bi-directional many-to-one association to BillProduct
-	@OneToMany(mappedBy="bill")
+	@OneToMany(cascade = CascadeType.ALL,mappedBy="bill")
+	@Column(name = "bill_Products")
 	private List<BillProduct> billProducts;
 
 	public Bill() {

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+
+<script type="text/javascript">
+	function submitForm(page) {
+		document.getElementById('page').value = page;
+		document.getElementById('frmSearch').submit();
+	}
+</script>
+<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+	<div th:replace="admin/common/header :: header"></div>
+	<hr />
+	<form id='frmSearch' th:action="@{/admin/bill/detail}" method="get">
+		<input type="hidden" name="page" id="page" />
+		<input type="hidden" name="billId" th:value="${billId}" />
+		 Name: <input
+			type="text" name="keyword" th:value="${keyword}" /> <input
+			type="submit" value="Search" />
+	</form>
+	
+	<h1>Chi tiet Bill</h1>
+	<hr/>
+	<table border="1px solid black">
+		<tr>
+			<th>ID</th>
+			<th>TEN_SP</th>
+			<th>GIA_SP</th>
+			<th>SOLUONG</th>
+			<th>THANH TIEN</th>
+			<th>OPTION</th>
+		</tr>
+
+		<tr th:each="bp:${billProducts}">
+			<td th:text="${bp.id }"></td>
+			<td th:text="${bp.product.name }"></td>
+			<td th:text="${bp.product.price }"></td>
+			<td th:text="${bp.quantity }"></td>
+			<td th:text="${bp.product.price*bp.quantity }"></td>
+			<td><a th:href="@{'/admin/bill/delete-bill-product?billProductId='+${bp.id }}">DELETE</a></td>			
+		</tr>
+
+	</table>
+	<div class="page">
+		<span th:each="pageIndex : ${listCount}"> <a
+			th:if="${page == pageIndex}" class="active"
+			th:onclick="'submitForm('+${pageIndex}+')'" th:text="${pageIndex} "></a>
+			<a th:if="${page != pageIndex}"
+			th:onclick="'submitForm('+${pageIndex}+')'" th:text="${pageIndex} "></a>
+		</span>
+	</div>
+
+</body>
+</html>

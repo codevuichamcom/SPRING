@@ -16,14 +16,14 @@ public class BillDTO {
 
 	private UserDTO user;
 
-	private List<BillProduct> billProducts;
+	private List<BillProductDTO> billProducts;
 	
 	public BillDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public BillDTO(int id, Date buyDate, float discountPercent, float priceTotal, UserDTO user,
-			List<BillProduct> billProducts) {
+			List<BillProductDTO> billProducts) {
 		super();
 		this.id = id;
 		this.buyDate = buyDate;
@@ -73,11 +73,11 @@ public class BillDTO {
 		this.user = user;
 	}
 
-	public List<BillProduct> getBillProducts() {
+	public List<BillProductDTO> getBillProducts() {
 		return billProducts;
 	}
 
-	public void setBillProducts(List<BillProduct> billProducts) {
+	public void setBillProducts(List<BillProductDTO> billProducts) {
 		this.billProducts = billProducts;
 	}
 

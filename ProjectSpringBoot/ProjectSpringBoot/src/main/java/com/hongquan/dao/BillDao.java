@@ -16,4 +16,8 @@ public interface BillDao {
 	public List<Bill> search(String keyword, int start, int length);
 	
 	public int countBillWhenSearch(String keyword);
+	
+	public List<Bill> searchByUsername(String username, int start, int length);
+	
+	public int countBillWhenSearchByUsername(String username);
 }

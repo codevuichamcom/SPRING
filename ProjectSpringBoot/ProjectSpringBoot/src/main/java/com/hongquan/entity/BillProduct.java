@@ -94,6 +94,5 @@ public class BillProduct implements Serializable {
 		this.bill = bill;
 	}
 
-	
 
 }

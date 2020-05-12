@@ -37,7 +37,8 @@ public class BillProductServiceImpl implements BillProductService {
 		Bill bill = new Bill();
 		bill.setId(billProductDTO.getBill().getId());
 		billProduct.setBill(bill);
-
+		
+//		System.out.println("billProduct: "+billProduct.getBill().getId()+" "+billProduct.getProduct().getId());
 		billProductDao.addBillProduct(billProduct);
 
 	}
@@ -57,9 +58,14 @@ public class BillProductServiceImpl implements BillProductService {
 		BillProduct billProduct = billProductDao.getBillProductById(billProductDTO.getId());
 		if (billProduct != null) {
 			billProduct = new BillProduct();
-
+			billProduct.setId(billProductDTO.getId());
+			
 			Product product = new Product();
 			product.setId(billProductDTO.getProduct().getId());
+			product.setName(billProductDTO.getProduct().getName());
+			product.setPrice(billProductDTO.getProduct().getPrice());
+			product.setQuantity(billProductDTO.getProduct().getQuantity());
+			
 			billProduct.setProduct(product);
 			billProduct.setQuantity(billProductDTO.getQuantity());
 			billProduct.setUnitPrice(billProductDTO.getUnitPrice());
@@ -77,8 +83,13 @@ public class BillProductServiceImpl implements BillProductService {
 		BillProduct billProduct = billProductDao.getBillProductById(id);
 		if (billProduct != null) {
 			BillProductDTO billProductDTO = new BillProductDTO();
+			billProductDTO.setId(billProduct.getId());
 			ProductDTO productDTO = new ProductDTO();
 			productDTO.setId(billProduct.getProduct().getId());
+			productDTO.setName(billProduct.getProduct().getName());
+			productDTO.setPrice(billProduct.getProduct().getPrice());
+			productDTO.setQuantity(billProduct.getProduct().getQuantity());
+			
 			billProductDTO.setProduct(productDTO);
 			billProductDTO.setQuantity(billProduct.getQuantity());
 			billProductDTO.setUnitPrice(billProduct.getUnitPrice());
@@ -101,8 +112,12 @@ public class BillProductServiceImpl implements BillProductService {
 
 		for (BillProduct billProduct : billProducts) {
 			BillProductDTO billProductDTO = new BillProductDTO();
+			billProductDTO.setId(billProduct.getId());
 			ProductDTO productDTO = new ProductDTO();
 			productDTO.setId(billProduct.getProduct().getId());
+			productDTO.setName(billProduct.getProduct().getName());
+			productDTO.setPrice(billProduct.getProduct().getPrice());
+			productDTO.setQuantity(billProduct.getProduct().getQuantity());
 			billProductDTO.setProduct(productDTO);
 			billProductDTO.setQuantity(billProduct.getQuantity());
 			billProductDTO.setUnitPrice(billProduct.getUnitPrice());
@@ -121,6 +136,40 @@ public class BillProductServiceImpl implements BillProductService {
 	@Override
 	public int countBillProductDTOWhenSearch(String keyword) {
 		return countBillProductDTOWhenSearch(keyword);
+	}
+
+	@Override
+	public List<BillProductDTO> searchByBillId(int billId, int start, int length) {
+		List<BillProduct> billProducts = billProductDao.searchByBillId(billId, start, length);
+		List<BillProductDTO> billProductDTOs = new ArrayList<BillProductDTO>();
+
+		for (BillProduct billProduct : billProducts) {
+			BillProductDTO billProductDTO = new BillProductDTO();
+			billProductDTO.setId(billProduct.getId());
+			ProductDTO productDTO = new ProductDTO();
+			productDTO.setId(billProduct.getProduct().getId());
+			productDTO.setName(billProduct.getProduct().getName());
+			productDTO.setPrice(billProduct.getProduct().getPrice());
+			productDTO.setQuantity(billProduct.getProduct().getQuantity());
+			
+			billProductDTO.setProduct(productDTO);
+			billProductDTO.setQuantity(billProduct.getQuantity());
+			billProductDTO.setUnitPrice(billProduct.getUnitPrice());
+
+			BillDTO billDTO = new BillDTO();
+			billDTO.setId(billProduct.getBill().getId());
+
+			billProductDTO.setBill(billDTO);
+
+			billProductDTOs.add(billProductDTO);
+		}
+
+		return billProductDTOs;
+	}
+
+	@Override
+	public int countBillProductWhenSearchByBillId(int billId) {
+		return billProductDao.countBillProductWhenSearchByBillId(billId);
 	}
 
 }
