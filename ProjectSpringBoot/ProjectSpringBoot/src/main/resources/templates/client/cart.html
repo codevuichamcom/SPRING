@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+
+<!-- Bootstrap core CSS -->
+<link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}"
+	rel="stylesheet" />
+
+<!-- Custom styles for this template -->
+<link th:href="@{/css/shop-homepage.css}" rel="stylesheet" />
+</head>
+<body>
+	<!-- Navigation -->
+	<div th:replace="client/common/navComponent :: nav"></div>
+	<div style="padding-left:2rem;padding-top:2rem;margin-bottom: 50rem;">
+		<p>Chi tiet gio hang</p>
+		<table border="1px solid black">
+			<tr>
+				<th>id</th>
+				<th>tensp</th>
+				<th>soluong</th>
+				<th>giasp</th>
+				<th>thanhtien</th>
+				<th>option</th>
+			</tr>
+
+			<tr th:each="entry: ${#session.getAttribute('cart')}">
+				<th th:text="${entry.key }"></th>
+				<th th:text="${entry.value.product.name }"></th>
+				<th th:text="${entry.value.quantity }"></th>
+				<th th:text="${entry.value.unitPrice }"></th>
+				<th th:text="${entry.value.quantity*entry.value.unitPrice }"></th>
+				<th><a th:href="@{'/member/delete-from-cart?key='+${entry.key}}">
+						xoa</a> <a></a></th>
+			</tr>
+
+		</table>
+
+		<a th:href="@{/}" role="button">mua tiep</a> <a
+			th:href="@{/member/bill/add}" role="button">thanh toan</a>
+	</div>
+	<!-- Footer -->
+	<div th:replace="client/common/footer :: footer"></div>
+</body>
+</html>
